@@ -7,7 +7,13 @@
 
 import UIKit
 
+
+
 class ViewController: UIViewController {
+    
+    let menuView = MenuView()
+    
+    let stockView = StockView()
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,14 +31,8 @@ class ViewController: UIViewController {
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
         stackView.spacing = 5
-        let menuView = UIView()
-//        menuView.translatesAutoresizingMaskIntoConstraints = false
-        menuView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        menuView.backgroundColor = .red
-        let stockView = UIView()
-//        stockView.translatesAutoresizingMaskIntoConstraints = false
-        stockView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        stockView.backgroundColor = .orange
+        
+        menuView.delegate = self
         
         [menuView, stockView]
             .forEach {
@@ -83,3 +83,9 @@ private extension ViewController {
     }
 }
 
+
+extension ViewController: ViewControllerProtocol {
+    func tapMenu(indexPath: IndexPath) {
+        stockView.moveStockCollectionView(indexPath: indexPath)
+    }
+}
